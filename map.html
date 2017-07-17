@@ -1,0 +1,121 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<title>traveling-with-oscar</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" crossorigin="anonymous">
+<style>
+  #map{ float: left; display: block; width: 500px; height: 600px; margin-right: 1em; background-color: #eee; }
+  #myCanvas { display: block; width: 600px; height: 600px; border: 1px solid #9C9898; }
+  #divContext { float: left; display: block; position: relative; padding: 0 0 30px 0;}
+  .switch-photo {position: absolute; text-align: right; padding: 10px 0 0 0; bottom: 0;}
+  .btn-switch { font-size: 15px;}
+  .form-group{ margin: 5px; margin-bottom: 1em; }
+  #address{ display: inline-block; width: 350px; font-size: 15px; }
+  .btn-go{ display: inline-block;   }
+</style>
+</head>
+
+<body>
+<div class="form-group">
+  <input class="form-control" type="text" id="address" placeholder="請輸入地點"> <button class="btn btn-go">Go</button>
+</div>
+<div id="map"></div>
+
+<div id="divContext">
+  <canvas id="myCanvas" width="900" height="900"></canvas>
+</div>
+
+<input class="lat" type="hidden" value="">
+<input class="lng" type="hidden" value="">
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyBxKtiOh3lYNzXBI6jjjC_oOGaqF1Z6Uy0"></script>
+<script>
+var photo = 'images/object/1.png';
+var map, marker;
+var loadImages = function (sources, callback) {
+  var images = {};
+  var loadedImages = 0;
+  var numImages = 0;
+
+  // get num of sources
+  for (var src in sources) { numImages++; }
+
+  for (var src in sources) {
+    images[src] = new Image();
+    images[src].onload = function() {
+      if (++loadedImages >= numImages) { callback(images); }
+    };
+    images[src].src = sources[src];
+  }
+};
+
+function geocodeAddress(geocoder, resultsMap) {
+  var address = document.getElementById('address').value;
+  geocoder.geocode({'address': address}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      map.panTo(results[0].geometry.location);
+      marker.setPosition(results[0].geometry.location);
+      imageReload(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+    } else {
+      alert('此地點無法解析.');
+    }
+  });
+}
+
+var imageReload = function(lat, lng){
+  lat = lat || 25.03000033976827;
+  lng = lng || 121.54913582462314;
+
+  var canvas = document.getElementById("myCanvas");
+  var context = canvas.getContext("2d");
+  var sources = {
+    photo: photo,
+    stview: "https://maps.googleapis.com/maps/api/streetview?key=AIzaSyBxKtiOh3lYNzXBI6jjjC_oOGaqF1Z6Uy0&size=900x900&location="+ lat +","+ lng +"&heading=0&pitch=1"
+  };
+
+  loadImages(sources, function(images) {
+    context.drawImage(images.stview, 0, 0, 900, 900);
+    context.drawImage(images.photo, 0, 0, 900, 900);
+  });
+
+  $('.lat').val(lat);
+  $('.lng').val(lng);
+};
+
+function initMap() {
+  var geocoder = new google.maps.Geocoder();
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 15,
+    center: {lat: 25.03000033976827, lng: 121.54913582462314}
+  });
+
+  marker = new google.maps.Marker({
+    map: map,
+    draggable: true,
+    position: {lat: 25.03000033976827, lng: 121.54913582462314}
+  });
+
+  google.maps.event.addListener(marker, 'dragend', function(){
+    imageReload( marker.getPosition().lat(), marker.getPosition().lng() );
+  });
+
+  $('.btn-go').on('click', function(e){
+    e.preventDefault();
+    geocodeAddress(geocoder, map);
+  });
+
+  $('.btn-switch').on('click', function(){
+  //   photo = 'image/os' + $(this).data('index') + '.png';
+    imageReload($('.lat').val(), $('.lng').val());
+  });
+}
+
+window.onload = function(images) {
+  initMap();
+  imageReload();
+};
+</script>
+
+</body>
+</html>
