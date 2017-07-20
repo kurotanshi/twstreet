@@ -130,7 +130,7 @@ window.onload = function(images) {
           }
         }
       },
-      'mouseup': function(e){
+      'mouseup mouseleave': function(e){
         dragging = false;
         var s_x = e.pageX, s_y = e.pageY;
         // Saves the last angle for future iterations
@@ -142,7 +142,7 @@ window.onload = function(images) {
 
         // console.log(s_rad, degree);
         heading = degree;
-        imageReload( marker.getPosition().lat(), marker.getPosition().lng() );
+        window.setTimeout(function(){ imageReload( marker.getPosition().lat(), marker.getPosition().lng() ); }, 100);
       }
     });
 
