@@ -12,7 +12,7 @@
         e.geocode({
             address: n
         }, function(e, o) {
-            o === google.maps.GeocoderStatus.OK ? (t.panTo(e[0].geometry.location), a.setPosition(e[0].geometry.location), 
+            o === google.maps.GeocoderStatus.OK ? (t.panTo(e[0].geometry.location), a.setPosition(e[0].geometry.location),
             r(e[0].geometry.location.lat(), e[0].geometry.location.lng())) : alert("此地點無法解析.");
         });
     }
@@ -61,8 +61,8 @@
             }), $("#map").on({
                 mousemove: function a(o) {
                     var r, d, p;
-                    e && (d = o.pageX, p = o.pageY, d !== i && p !== s && (r = Math.atan2(p - s, d - i), 
-                    r -= Math.atan2(l - s, g - i), r += c, t = (r * (360 / (2 * Math.PI))).toFixed(5), 
+                    e && (d = o.pageX, p = o.pageY, d !== i && p !== s && (r = Math.atan2(p - s, d - i),
+                    r -= Math.atan2(l - s, g - i), r += c, t = (r * (360 / (2 * Math.PI))).toFixed(5),
                     n.css("transform", "rotate(" + t + "deg)"), n.css("transform-origin", "50% 50%")));
                 },
                 mouseup: function d(p) {
