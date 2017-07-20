@@ -1,0 +1,32 @@
+body{ padding: 1em;  }
+h1{ font-size: 22px; margin: 3px 0; }
+
+#map{ float: left; display: block; width: 500px; height: 600px; margin-right: 1em; background-color: #eee; }
+  #myCanvas { display: block; width: 600px; height: 600px; border: 1px solid #9C9898; }
+  #divContext { float: left; display: block; position: relative; padding: 0 0 30px 0;}
+  .switch-photo {position: absolute; text-align: right; padding: 10px 0 0 0; bottom: 0;}
+  .btn-switch { font-size: 15px;}
+  .form-group{ margin: 5px; margin-bottom: 1em; }
+  #address{ display: inline-block; width: 600px; font-size: 15px; }
+  .btn-go{ display: inline-block; }
+
+#marker{
+  position: relative;
+  top: 20px;
+  img{
+    position: relative;
+    z-index: 10;
+  }
+  .handle {
+    position: absolute;
+    z-index: 5;
+    left: -8px;
+    top: -40px;
+    width: 1px;
+    height: 1px;
+    border: 32px solid rgba(255, 151, 0, 0.75);
+    border-radius: 100px 0 0;
+    transform: rotate(45deg);
+  }
+}
+
