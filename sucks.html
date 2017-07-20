@@ -7,7 +7,7 @@
   <meta property="og:title" content="台灣街景封面產生器 with Google map 街景" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kuro.tw/twstreet/" />
-  <meta property="og:image" content="https://kuro.tw/twstreet/images/fb.png" />
+  <meta property="og:image" content="https://kuro.tw/twstreet/images/sucks-fb.png" />
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" crossorigin="anonymous">
   <style>
@@ -134,14 +134,14 @@
       }
 
       var imageReload = function(lat, lng) {
-        lat = lat || 25.03000033976827;
-        lng = lng || 121.54913582462314;
+        lat = lat || 25.04008086415386;
+        lng = lng || 121.51134886402133;
 
         var canvas = document.getElementById("myCanvas");
         var context = canvas.getContext("2d");
         var sources = {
           photo: photo,
-          stview: "https://maps.googleapis.com/maps/api/streetview?key=AIzaSyBxKtiOh3lYNzXBI6jjjC_oOGaqF1Z6Uy0&size=900x900&location=" + lat + "," + lng + "&heading=20&pitch=2"
+          stview: "https://maps.googleapis.com/maps/api/streetview?key=AIzaSyBxKtiOh3lYNzXBI6jjjC_oOGaqF1Z6Uy0&size=740x860&location=" + lat + "," + lng + "&heading=100&pitch=2"
         };
 
         loadImages(sources, function(images) {
